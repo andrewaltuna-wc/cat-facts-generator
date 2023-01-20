@@ -13,22 +13,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late double _deviceWidth;
   bool _disableButton = false;
   bool _isLoading = false;
-  // String catImage = "";
   NetworkImage? catImage;
   String catFact = "Click on generate to view a random cat fact!";
   String? catFactId;
 
   void generateContent() async {
     // Image
-    // final int imageId = Random().nextInt(10);
+    // Returns a random cat image
     final Uri imageUrl = Uri.https("cataas.com", "cat", {'json': 'true'});
     final imageResponse = await get(imageUrl);
     final imageJson = json.decode(imageResponse.body);
 
     // Fact
+    // Below API contains 90 facts
     final int factId = Random().nextInt(91);
     final Uri factUrl =
         Uri.https("meowfacts.herokuapp.com", "", {'id': '$factId'});
@@ -46,7 +45,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(title: const Text("Cat Facts Generator")),
       body: Container(
@@ -82,8 +80,6 @@ class _HomePageState extends State<HomePage> {
                               _isLoading = true;
                             });
                           },
-                    // style: ElevatedButton.styleFrom(
-                    //     minimumSize: Size.fromHeight(30)),
                     child: const Text("GENERATE"),
                   )
                 ],
